@@ -2,9 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GrabNearestObject : MonoBehaviour
+public class GrabMechanic : MonoBehaviour
 {
-    public float grabHeight = 10.0f;
+    public float grabHeight;
+
     private GameObject heldItem;
     private GameObject nearest;
 
@@ -37,6 +38,11 @@ public class GrabNearestObject : MonoBehaviour
         return nearestObject;
     }
 
+    private void Start()
+    {
+        grabHeight = 2.5f;
+    }
+
     private void FixedUpdate()
     {
         // Get nearest grabable object
@@ -45,28 +51,22 @@ public class GrabNearestObject : MonoBehaviour
         // define order by looking up power up
     }
 
-    private void Update()
+    public void Grab()
     {
-        // If input for grab, 
-
-
-        if (Input.GetKeyDown(KeyCode.E) && heldItem == null)
+        if(heldItem == null)
         {
-            if (nearest != null)
-            {
-                nearest.transform.position = new Vector3(transform.position.x, transform.position.y + grabHeight, transform.position.z);
-                heldItem = nearest;
-
-                
-            }
+            nearest.transform.position = new Vector3(transform.position.x, transform.position.y + grabHeight, transform.position.z);
+            heldItem = nearest;
         }
-
-        if(Input.GetKeyDown(KeyCode.Space) && heldItem != null)
+        else
         {
-            heldItem.GetComponent<Rigidbody>().AddForce(transform.forward * 10000);
+            heldItem.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
             heldItem = null;
         }
+    }
 
+    private void Update()
+    {
         if (heldItem != null)
         {
             heldItem.transform.position = new Vector3(transform.position.x, transform.position.y + grabHeight, transform.position.z);
