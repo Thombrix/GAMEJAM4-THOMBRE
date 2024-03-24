@@ -5,7 +5,8 @@ using static PowerUpManager;
 
 public class GrabMechanic : MonoBehaviour
 {
-    public float grabHeight;
+    public float grabHeight = 5;
+    public float throwForce = 5000;
 
     private GameObject heldItem;
     private GameObject nearest;
@@ -41,7 +42,6 @@ public class GrabMechanic : MonoBehaviour
 
     private void Start()
     {
-        grabHeight = 2.5f;
     }
 
     private void FixedUpdate()
@@ -75,7 +75,7 @@ public class GrabMechanic : MonoBehaviour
         {
             //heldItem.GetComponentInParent<Collider>().enabled = false;
             if (GetComponent<PowerUpManager>().GetActivePowerUp() == PowerUpManager.PowerUp.GRAB)
-                heldItem.GetComponentInParent<Rigidbody>().GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+                heldItem.GetComponentInParent<Rigidbody>().GetComponent<Rigidbody>().AddForce(transform.forward * throwForce);
 
             else
             {
