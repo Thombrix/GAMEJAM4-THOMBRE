@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static PowerUpManager;
 
 public class GrabMechanic : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class GrabMechanic : MonoBehaviour
 
     private List<GameObject> GetUnGrabables()
     {
-        return GameObject.FindGameObjectsWithTag("UNGRABABLE").ToList().Where(go => go != this.gameObject).ToList();
+        return GameObject.FindGameObjectsWithTag("Goober").ToList().Where(go => go != this.gameObject).ToList();
     }
 
     public GameObject FindNearestObject(List<GameObject> gameObjects)
@@ -65,14 +66,21 @@ public class GrabMechanic : MonoBehaviour
 
     public void Grab()
     {
-        if(heldItem == null)
+        if(heldItem == null && nearest != null)
         {
             nearest.transform.position = new Vector3(transform.position.x, transform.position.y + grabHeight, transform.position.z);
             heldItem = nearest;
         }
-        else
+        else if(heldItem != null)
         {
-            heldItem.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+            //heldItem.GetComponentInParent<Collider>().enabled = false;
+            if (GetComponent<PowerUpManager>().GetActivePowerUp() == PowerUpManager.PowerUp.GRAB)
+                heldItem.GetComponentInParent<Rigidbody>().GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+
+            else
+            {
+                heldItem.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+            }
             heldItem = null;
         }
     }
