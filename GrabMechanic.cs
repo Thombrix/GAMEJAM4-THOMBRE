@@ -79,7 +79,7 @@ public class GrabMechanic : MonoBehaviour
 
             else
             {
-                heldItem.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+                heldItem.GetComponent<Rigidbody>().AddForce(transform.forward * throwForce);
             }
             heldItem = null;
         }
