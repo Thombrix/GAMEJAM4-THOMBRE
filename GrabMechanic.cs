@@ -45,10 +45,22 @@ public class GrabMechanic : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Get nearest grabable object
-        nearest = FindNearestObject(GetGrabables());
+        PowerUpManager.PowerUp powerUp = GetComponent<PowerUpManager>().GetActivePowerUp();
 
-        // define order by looking up power up
+        if(powerUp == PowerUpManager.PowerUp.GRAB)
+        {
+            Debug.Log("POWER UP GRAB");
+            nearest = FindNearestObject(GetUnGrabables());
+            if (nearest == null)
+            {
+                nearest = FindNearestObject(GetGrabables());
+            }
+        }
+        else
+        {
+            nearest = FindNearestObject(GetGrabables());
+
+        }
     }
 
     public void Grab()

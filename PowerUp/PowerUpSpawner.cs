@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class PowerUpSpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    public GameObject powerUpPrefab;
+    public float spawnInterval = 20f;
+
     void Start()
     {
-        
+        StartCoroutine(SpawnPowerUp());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator SpawnPowerUp()
     {
-        
+        while (true)
+        {
+            yield return new WaitForSeconds(spawnInterval);
+
+            Instantiate(powerUpPrefab, transform.position, transform.rotation);
+        }
     }
 }
