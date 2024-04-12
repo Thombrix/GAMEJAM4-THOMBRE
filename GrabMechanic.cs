@@ -68,7 +68,7 @@ public class GrabMechanic : MonoBehaviour
     {
         if(heldItem == null && nearest != null)
         {
-            nearest.transform.position = new Vector3(transform.position.x, transform.position.y + grabHeight, transform.position.z);
+            nearest.transform.position = new Vector3(transform.position.x + (grabHeight * 2), transform.position.y + grabHeight, transform.position.z);
             heldItem = nearest;
         }
         else if(heldItem != null)
